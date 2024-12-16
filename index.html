@@ -1,0 +1,512 @@
+<html><head><base href="." /><title>La Cartoleria Ferlinghetti</title>
+    <style>
+    :root {
+        --primary: #2c3e50;
+        --accent: #e74c3c;
+        --bg: #ecf0f1;
+        --text: #2c3e50;
+        --card-bg: white;
+    }
+    
+    /* Dark theme colors */
+    [data-theme="dark"] {
+        --primary: #1a252f;
+        --accent: #e74c3e;
+        --bg: #2c3e50;
+        --text: #ecf0f1;
+        --card-bg: #34495e;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        font-family: 'Open Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        transition: all 0.3s ease;
+    }
+    
+    .theme-switch-wrapper {
+        position: fixed;
+        top: 80px; /* Increased from 20px to move below header */
+        right: 20px;
+        display: flex;
+        align-items: center;
+        z-index: 100;
+        background: var(--card-bg);
+        padding: 0.5rem;
+        border-radius: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        /* Add transition for smooth theme changes */
+        transition: background-color 0.3s ease;
+    }
+    
+    /* Add hover effect */
+    .theme-switch-wrapper:hover {
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    
+    .theme-switch {
+        display: inline-block;
+        height: 34px;
+        width: 60px;
+        position: relative;
+    }
+    
+    .theme-switch input {
+        display: none;
+    }
+    
+    .slider {
+        background-color: #ccc;
+        bottom: 0;
+        cursor: pointer;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: .4s;
+        border-radius: 34px;
+    }
+    
+    .slider:before {
+        background-color: #fff;
+        bottom: 4px;
+        content: "";
+        height: 26px;
+        left: 4px;
+        position: absolute;
+        transition: .4s;
+        width: 26px;
+        border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+        background-color: var(--accent);
+    }
+    
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+    
+    header {
+        background: var(--primary);
+        color: white;
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .pencil-icon {
+        animation: rotate 3s infinite linear;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+    }
+    
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+        position: relative;
+        padding: 0.5rem 0;
+    }
+    
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+        color: var(--accent);
+    }
+    
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+    
+    .hero {
+        text-align: center;
+        padding: 6rem 2rem;
+        background: var(--card-bg);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, var(--accent) 0%, transparent 100%);
+        opacity: 0.1;
+        z-index: 0;
+    }
+    
+    .hero * {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .products {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+    
+    .product-card {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--accent);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .product-icon {
+        width: 100%;
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    footer {
+        background: var(--primary);
+        color: white;
+        text-align: center;
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .contact-info {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .service-list {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    .service-item {
+        background: var(--card-bg);
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--accent);
+    }
+    
+    .service-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    
+    .about-section {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: var(--card-bg);
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .contact-form {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: var(--card-bg);
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--text);
+        transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: var(--accent);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    .btn {
+        background: var(--accent);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+    
+    .btn:hover {
+        background: #c0392b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+    
+    .back-to-home {
+        display: inline-block;
+        margin: 1rem;
+        color: var(--text);
+        text-decoration: none;
+    }
+    
+    .back-to-home:hover {
+        color: var(--accent);
+    }
+    
+    h2 {
+        position: relative;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--accent);
+        border-radius: 3px;
+    }
+    </style>
+    
+    <script>
+    // Theme switcher functionality
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }
+    
+    function toggleTheme() {
+        if (localStorage.getItem('theme') === 'dark') {
+            setTheme('light');
+        } else {
+            setTheme('dark');
+        }
+    }
+    
+    // Check for saved theme preference or set default
+    window.onload = function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+        document.getElementById('theme-switch').checked = savedTheme === 'dark';
+    }
+    
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        
+        if (!name || !email || !message) {
+            alert('Per favore, compila tutti i campi');
+            return false;
+        }
+        
+        if (!email.includes('@')) {
+            alert('Per favore, inserisci un indirizzo email valido');
+            return false;
+        }
+        
+        return true;
+    }
+    </script>
+    </head>
+    <body>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="theme-switch">
+                <input type="checkbox" id="theme-switch" onchange="toggleTheme()">
+                <span class="slider"></span>
+            </label>
+        </div>
+    
+        <header>
+            <nav>
+                <div class="logo">
+                    <svg class="pencil-icon" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="white" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+                    </svg>
+                    <h1>La Cartoleria Magica</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="https://example.com/products">Prodotti</a>
+                    <a href="https://example.com/services">Servizi</a>
+                    <a href="https://example.com/about">Chi Siamo</a>
+                    <a href="https://example.com/contact">Contatti</a>
+                </div>
+            </nav>
+        </header>
+    
+        <section class="hero">
+            <h2>Benvenuti nella Cartoleria Ferlinghetti</h2>
+            <p>La tua destinazione per tutti i materiali scolastici e da ufficio</p>
+        </section>
+    
+        <section class="products">
+            <div class="product-card">
+                <div class="product-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24">
+                        <path fill="#e74c3c" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+                    </svg>
+                </div>
+                <h3>Cancelleria</h3>
+                <p>Penne, matite, evidenziatori e molto altro</p>
+                <a href="https://example.com/products/cancelleria" class="btn">Scopri di più</a>
+            </div>
+    
+            <div class="product-card">
+                <div class="product-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24">
+                        <path fill="#e74c3c" d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"/>
+                    </svg>
+                </div>
+                <h3>Quaderni</h3>
+                <p>Quaderni per ogni esigenza</p>
+                <a href="https://example.com/products/quaderni" class="btn">Scopri di più</a>
+            </div>
+    
+            <div class="product-card">
+                <div class="product-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24">
+                        <path fill="#e74c3c" d="M18,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V4A2,2 0 0,0 18,2M9,4H11V9L10,8.25L9,9V4M18,20H6V4H7V13L10,10L13,13V4H18V20Z"/>
+                    </svg>
+                </div>
+                <h3>Libri</h3>
+                <p>Ampia selezione di libri scolastici</p>
+                <a href="https://example.com/products/libri" class="btn">Scopri di più</a>
+            </div>
+    
+            <div class="product-card">
+                <div class="product-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24">
+                        <path fill="#e74c3c" d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M11,7H13V13H11V7M11,15H13V17H11V15Z"/>
+                    </svg>
+                </div>
+                <h3>Accessori</h3>
+                <p>Zaini, astucci e accessori per la scuola</p>
+                <a href="https://example.com/products/accessori" class="btn">Scopri di più</a>
+            </div>
+        </section>
+    
+        <section class="service-list">
+            <h2>I Nostri Servizi</h2>
+            <div class="service-item">
+                <h3>Fotocopie e Stampe</h3>
+                <p>Servizio di fotocopie in bianco e nero e a colori, stampe da file, rilegature</p>
+            </div>
+            <div class="service-item">
+                <h3>Prenotazione Libri Scolastici</h3>
+                <p>Prenota i tuoi libri scolastici con anticipo e risparmia tempo</p>
+            </div>
+            <div class="service-item">
+                <h3>Personalizzazione Quaderni</h3>
+                <p>Personalizza i tuoi quaderni con copertine e adesivi unici</p>
+            </div>
+        </section>
+    
+        <section class="about-section">
+            <h2>Chi Siamo</h2>
+            <p>La Cartoleria Ferlinghetti è presente nel cuore di Gussago dal 1990. La nostra missione è fornire prodotti di alta qualità e un servizio eccellente ai nostri clienti. Siamo specializzati in materiale scolastico, articoli per ufficio e libri di testo.</p>
+            <p>Il nostro team esperto è sempre disponibile per consigliarti i prodotti migliori per le tue esigenze.</p>
+        </section>
+    
+        <section class="contact-form">
+            <h2>Contattaci</h2>
+            <form onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="name">Nome:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Messaggio:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn">Invia</button>
+            </form>
+        </section>
+    
+        <footer>
+            <div class="contact-info">
+                <h3>Contattaci</h3>
+                <p>Via Roma 123, Gussago</p>
+                <p>Email: info@cartoleriaferlighetti.it</p>
+                <p>Tel: 030 2770789</p>
+            </div>
+        </footer>
+    
+    </body></html>
